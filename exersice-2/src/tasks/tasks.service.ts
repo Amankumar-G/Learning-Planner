@@ -35,4 +35,16 @@ export class TasksService {
 
     return this.tasks;
   }
+
+  updateTask(id: string, updateTaskDto: CreateTaskDto) {
+    const taskIndex = this.tasks.findIndex((task) => task.id === +id);
+
+    if (taskIndex === -1) {
+      return { message: `Task with id ${id} not found` };
+    }
+
+    this.tasks[taskIndex] = { id: +id, ...updateTaskDto };
+
+    return this.tasks[taskIndex];
+  }
 }
