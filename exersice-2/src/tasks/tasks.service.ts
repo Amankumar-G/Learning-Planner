@@ -1,54 +1,66 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateTaskDto } from './dto/create-task-dto';
 import { TaskAlreadyExistsException } from './exceptions/task-already-exists.exception';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TasksService {
-  private readonly tasks = [
-    { id: 1, title: 'Task 1', description: 'This is task 1' },
-    { id: 2, title: 'Task 2', description: 'This is task 2' },
-    { id: 3, title: 'Task 3', description: 'This is task 3' },
-  ];
+  constructor(private readonly prismaService: PrismaService) {}
 
-  getTasks() {
-    return this.tasks;
+  async getTasks() {
+    return this.prismaService.task.findMany({
+      orderBy: { id: 'asc' },
+    });
   }
 
-  createTask(createTaskDto: CreateTaskDto) {
-    const newtask = {
-      id: this.tasks.length + 1,
-      ...createTaskDto,
-    };
+  async createTask(createTaskDto: CreateTaskDto) {
+    const existingTask = await this.prismaService.task.findFirst({
+      where: { title: createTaskDto.title },
+    });
 
-    if (this.tasks.some((task) => task.title === createTaskDto.title)) {
+    if (existingTask) {
       throw new TaskAlreadyExistsException(createTaskDto.title);
     }
-    this.tasks.push(newtask);
 
-    return newtask;
+    return this.prismaService.task.create({
+      data: {
+        title: createTaskDto.title,
+        description: createTaskDto.description,
+      },
+    });
   }
 
-  deleteTask(id: string) {
-    const taskIndex = this.tasks.findIndex((task) => task.id === +id);
+  async deleteTask(id: number) {
+    const existingTask = await this.prismaService.task.findUnique({
+      where: { id },
+    });
 
-    if (taskIndex === -1) {
+    if (!existingTask) {
       throw new NotFoundException(`Task with id ${id} not found`);
     }
 
-    this.tasks.splice(taskIndex, 1);
+    await this.prismaService.task.delete({
+      where: { id },
+    });
 
-    return this.tasks;
+    return { message: `Task with id ${id} deleted successfully` };
   }
 
-  updateTask(id: string, updateTaskDto: CreateTaskDto) {
-    const taskIndex = this.tasks.findIndex((task) => task.id === +id);
+  async updateTask(id: number, updateTaskDto: CreateTaskDto) {
+    const existingTask = await this.prismaService.task.findUnique({
+      where: { id },
+    });
 
-    if (taskIndex === -1) {
+    if (!existingTask) {
       throw new NotFoundException(`Task with id ${id} not found`);
     }
 
-    this.tasks[taskIndex] = { id: +id, ...updateTaskDto };
-
-    return this.tasks[taskIndex];
+    return this.prismaService.task.update({
+      where: { id },
+      data: {
+        title: updateTaskDto.title,
+        description: updateTaskDto.description,
+      },
+    });
   }
 }

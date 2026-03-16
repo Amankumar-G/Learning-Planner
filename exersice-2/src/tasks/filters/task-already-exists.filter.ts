@@ -5,7 +5,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { TaskAlreadyExistsException } from '../exceptions/task-already-exists.exception';
+import { TaskAlreadyExistsException } from '../exceptions/task-already-exists.exception.js';
 
 @Catch(TaskAlreadyExistsException)
 export class TaskAlreadyExistsFilter implements ExceptionFilter {

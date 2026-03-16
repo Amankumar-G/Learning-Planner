@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  ParseIntPipe,
   Param,
   Post,
   Put,
@@ -28,12 +29,15 @@ export class TasksController {
   }
 
   @Delete(':id')
-  deleteTask(@Param('id') id: string) {
+  deleteTask(@Param('id', ParseIntPipe) id: number) {
     return this.tasksService.deleteTask(id);
   }
 
   @Put(':id')
-  updateTask(@Param('id') id: string, @Body() updateTaskDto: CreateTaskDto) {
+  updateTask(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTaskDto: CreateTaskDto,
+  ) {
     return this.tasksService.updateTask(id, updateTaskDto);
   }
 }
