@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import type { CreateTaskDto } from './dto/create-task-dto';
+import { TaskAlreadyExistsException } from './exceptions/task-already-exists.exception';
 
 @Injectable()
 export class TasksService {
@@ -19,6 +20,9 @@ export class TasksService {
       ...createTaskDto,
     };
 
+    if (this.tasks.some((task) => task.title === createTaskDto.title)) {
+      throw new TaskAlreadyExistsException(createTaskDto.title);
+    }
     this.tasks.push(newtask);
 
     return newtask;
@@ -28,7 +32,7 @@ export class TasksService {
     const taskIndex = this.tasks.findIndex((task) => task.id === +id);
 
     if (taskIndex === -1) {
-      return { message: `Task with id ${id} not found` };
+      throw new NotFoundException(`Task with id ${id} not found`);
     }
 
     this.tasks.splice(taskIndex, 1);
@@ -40,7 +44,7 @@ export class TasksService {
     const taskIndex = this.tasks.findIndex((task) => task.id === +id);
 
     if (taskIndex === -1) {
-      return { message: `Task with id ${id} not found` };
+      throw new NotFoundException(`Task with id ${id} not found`);
     }
 
     this.tasks[taskIndex] = { id: +id, ...updateTaskDto };

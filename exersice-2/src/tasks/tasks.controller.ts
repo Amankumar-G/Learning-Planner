@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  UseFilters,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import type { CreateTaskDto } from './dto/create-task-dto';
+import { TaskAlreadyExistsFilter } from './filters/task-already-exists.filter';
 
 @Controller('tasks')
 export class TasksController {
@@ -20,6 +22,7 @@ export class TasksController {
   }
 
   @Post()
+  @UseFilters(TaskAlreadyExistsFilter)
   createTask(@Body() createTaskDto: CreateTaskDto) {
     return this.tasksService.createTask(createTaskDto);
   }
