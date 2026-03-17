@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Req,
   ParseIntPipe,
   Param,
   Post,
+  Query,
   Put,
   UseFilters,
   UseGuards,
@@ -28,8 +30,12 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  getTasks(@Req() request: AuthenticatedRequest) {
-    return this.tasksService.getTasks(request.user.sub);
+  getTasks(
+    @Req() request: AuthenticatedRequest,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  ) {
+    return this.tasksService.getTasks(request.user.sub, page, limit);
   }
 
   @Post()
