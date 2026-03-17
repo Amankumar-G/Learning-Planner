@@ -7,15 +7,16 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class TasksService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getTasks() {
+  async getTasks(userId: number) {
     return this.prismaService.task.findMany({
+      where: { userId },
       orderBy: { id: 'asc' },
     });
   }
 
-  async createTask(createTaskDto: CreateTaskDto) {
+  async createTask(userId: number, createTaskDto: CreateTaskDto) {
     const existingTask = await this.prismaService.task.findFirst({
-      where: { title: createTaskDto.title },
+      where: { title: createTaskDto.title, userId },
     });
 
     if (existingTask) {
@@ -26,14 +27,14 @@ export class TasksService {
       data: {
         title: createTaskDto.title,
         description: createTaskDto.description,
-        user: { connect: { id: 1 } }, //temporary hardcoded user connection, replace with actual user id when authentication is implemented
+        user: { connect: { id: userId } },
       },
     });
   }
 
-  async deleteTask(id: number) {
-    const existingTask = await this.prismaService.task.findUnique({
-      where: { id },
+  async deleteTask(userId: number, id: number) {
+    const existingTask = await this.prismaService.task.findFirst({
+      where: { id, userId },
     });
 
     if (!existingTask) {
@@ -47,9 +48,9 @@ export class TasksService {
     return { message: `Task with id ${id} deleted successfully` };
   }
 
-  async updateTask(id: number, updateTaskDto: CreateTaskDto) {
-    const existingTask = await this.prismaService.task.findUnique({
-      where: { id },
+  async updateTask(userId: number, id: number, updateTaskDto: CreateTaskDto) {
+    const existingTask = await this.prismaService.task.findFirst({
+      where: { id, userId },
     });
 
     if (!existingTask) {
