@@ -26,6 +26,7 @@ export class TasksService {
       data: {
         title: createTaskDto.title,
         description: createTaskDto.description,
+        user: { connect: { id: 1 } }, //temporary hardcoded user connection, replace with actual user id when authentication is implemented
       },
     });
   }
