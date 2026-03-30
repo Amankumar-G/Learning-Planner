@@ -11,28 +11,72 @@ interface Props {
 export function TaskList({ tasks, loading, error }: Readonly<Props>) {
   if (loading) {
     return (
-      <Flex justify="center" align="center" h="52">
-        <Spinner size="md" color="blue.400" borderWidth="2px" />
+      <Flex
+        justify="center"
+        align="center"
+        h="52"
+        direction="column"
+        gap={3}
+        border="1px dashed"
+        borderColor="var(--outline)"
+        rounded="2xl"
+        bg="#fffcf6"
+      >
+        <Spinner size="md" color="var(--accent)" borderWidth="2px" />
+        <Text fontSize="sm" color="var(--muted)">
+          Syncing your tasks...
+        </Text>
       </Flex>
     )
   }
 
   if (error) {
     return (
-      <Flex justify="center" align="center" h="52">
-        <Text fontSize="sm" color="red.400">{error}</Text>
+      <Flex
+        justify="center"
+        align="center"
+        h="52"
+        border="1px solid"
+        borderColor="#efc0bf"
+        rounded="2xl"
+        bg="#fff5f5"
+      >
+        <Text fontSize="sm" color="#a63b37" fontWeight="500">
+          {error}
+        </Text>
       </Flex>
     )
   }
 
   if (tasks.length === 0) {
     return (
-      <Flex justify="center" align="center" h="52" direction="column" gap={4}>
+      <Flex
+        justify="center"
+        align="center"
+        h="56"
+        direction="column"
+        gap={4}
+        border="1px dashed"
+        borderColor="var(--outline)"
+        rounded="2xl"
+        bg="#fffcf6"
+      >
         <Box textAlign="center">
-          <Text fontSize="sm" fontWeight="500" color="gray.700">No tasks yet</Text>
-          <Text fontSize="xs" color="gray.400" mt={1}>Create your first task to get started</Text>
+          <Text fontSize="md" fontWeight="700" color="var(--ink)">
+            No tasks yet
+          </Text>
+          <Text fontSize="sm" color="var(--muted)" mt={1}>
+            Create your first task to start your weekly learning rhythm
+          </Text>
         </Box>
-        <Button size="sm" colorPalette="blue" variant="outline" rounded="full" px={5}>
+        <Button
+          size="sm"
+          bg="var(--accent)"
+          color="white"
+          rounded="full"
+          px={5}
+          _hover={{ bg: "#0b615a" }}
+        >
           + New Task
         </Button>
       </Flex>
@@ -40,7 +84,7 @@ export function TaskList({ tasks, loading, error }: Readonly<Props>) {
   }
 
   return (
-    <Stack gap={2}>
+    <Stack gap={3}>
       {tasks.map((task) => (
         <TaskCard key={task.id} task={task} />
       ))}

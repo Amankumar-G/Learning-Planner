@@ -13,22 +13,30 @@ export function Navbar() {
     <Box
       as="nav"
       borderBottomWidth="1px"
-      borderColor="gray.100"
-      bg="white"
+      borderColor="var(--outline)"
+      bg="rgba(255, 253, 247, 0.88)"
+      backdropFilter="blur(8px)"
       px={{ base: 5, md: 10 }}
       py={4}
       position="sticky"
       top={0}
-      zIndex={10}
+      zIndex={30}
     >
       <Flex align="center" justify="space-between" maxW="5xl" mx="auto">
         <Link href="/" style={{ textDecoration: "none" }}>
-          <Text fontSize="lg" fontWeight="700" letterSpacing="-0.5px" color="gray.900">
-            Learn<Text as="span" color="blue.500">Flow</Text>
+          <Text fontSize="lg" fontWeight="800" letterSpacing="-0.6px" color="var(--ink)">
+            Learn<Text as="span" color="var(--accent)">Flow</Text>
           </Text>
         </Link>
 
-        <HStack gap={1}>
+        <HStack
+          gap={1}
+          p={1}
+          rounded="full"
+          border="1px solid"
+          borderColor="var(--outline)"
+          bg="rgba(255, 255, 255, 0.75)"
+        >
           {NAV_LINKS.map(({ label, href }) => (
             <Link key={href} href={href} style={{ textDecoration: "none" }}>
               <Text
@@ -36,11 +44,11 @@ export function Navbar() {
                 py={1.5}
                 rounded="full"
                 fontSize="sm"
-                fontWeight="500"
-                color={pathname === href ? "blue.600" : "gray.500"}
-                bg={pathname === href ? "blue.50" : "transparent"}
-                _hover={{ color: "gray.900" }}
-                transition="all 0.15s"
+                fontWeight="600"
+                color={pathname === href ? "var(--accent)" : "var(--muted)"}
+                bg={pathname === href ? "var(--accent-soft)" : "transparent"}
+                _hover={{ color: "var(--ink)" }}
+                transition="all 0.18s"
               >
                 {label}
               </Text>
@@ -48,7 +56,15 @@ export function Navbar() {
           ))}
         </HStack>
 
-        <Button size="sm" variant="ghost" colorPalette="gray" color="gray.500" fontSize="sm">
+        <Button
+          size="sm"
+          variant="outline"
+          borderColor="var(--outline)"
+          color="var(--muted)"
+          rounded="full"
+          fontSize="sm"
+          _hover={{ bg: "#faf4e7", color: "var(--ink)" }}
+        >
           Log out
         </Button>
       </Flex>

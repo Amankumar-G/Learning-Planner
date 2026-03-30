@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Text } from "@chakra-ui/react"
+import { Badge, Button, Flex, Heading, Text } from "@chakra-ui/react"
 
 interface Props {
   taskCount: number
@@ -6,24 +6,38 @@ interface Props {
 }
 
 export function TasksHeader({ taskCount, loading }: Readonly<Props>) {
+  const taskPluralSuffix = taskCount === 1 ? "" : "s"
+  const summaryText = loading
+    ? "Loading your study plan..."
+    : `${taskCount} task${taskPluralSuffix} in your planner`
+
   return (
-    <Flex mb={8} align="center" justify="space-between">
-      <Flex direction="column" gap={0.5}>
-        <Heading size="xl" fontWeight="700" letterSpacing="-0.5px" color="gray.900">
+    <Flex mb={7} align={{ base: "start", md: "center" }} justify="space-between" gap={4} wrap="wrap">
+      <Flex direction="column" gap={1.5}>
+        <Heading size="xl" fontWeight="800" letterSpacing="-0.7px" color="var(--ink)">
           My Tasks
         </Heading>
-        <Text fontSize="sm" color="gray.400">
-          {loading ? "Loading…" : `${taskCount} task${taskCount === 1 ? "" : "s"}`}
-        </Text>
+        <Flex align="center" gap={2.5}>
+          <Text fontSize="sm" color="var(--muted)">
+            {summaryText}
+          </Text>
+          {!loading && (
+            <Badge rounded="full" px={2.5} py={1} bg="var(--accent-soft)" color="var(--accent)">
+              Active
+            </Badge>
+          )}
+        </Flex>
       </Flex>
 
       <Button
-        size="sm"
-        colorPalette="blue"
+        size="md"
+        bg="var(--accent)"
+        color="white"
         rounded="full"
-        px={5}
-        fontWeight="500"
+        px={6}
+        fontWeight="600"
         fontSize="sm"
+        _hover={{ bg: "#0b615a" }}
       >
         + New Task
       </Button>
