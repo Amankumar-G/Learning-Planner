@@ -92,7 +92,7 @@ export default function Home() {
             </Text>
 
             <Flex gap={3} wrap="wrap" pt={2}>
-              <Link href="/tasks" style={{ textDecoration: "none" }}>
+              <Link href="/auth/signup" style={{ textDecoration: "none" }}>
                 <Button
                   size="lg"
                   rounded="full"
@@ -101,7 +101,20 @@ export default function Home() {
                   px={7}
                   _hover={{ bg: "#0b615a" }}
                 >
-                  Open Tasks
+                  Get started
+                </Button>
+              </Link>
+              <Link href="/auth/login" style={{ textDecoration: "none" }}>
+                <Button
+                  size="lg"
+                  rounded="full"
+                  variant="outline"
+                  borderColor="var(--outline)"
+                  color="var(--ink)"
+                  px={7}
+                  _hover={{ bg: "var(--accent-soft)", borderColor: "var(--accent)", color: "var(--accent)" }}
+                >
+                  Sign in
                 </Button>
               </Link>
             </Flex>
@@ -158,9 +171,9 @@ export default function Home() {
         </SimpleGrid>
 
         <Flex justify="flex-end" mt={5}>
-          <Link href="/tasks" style={{ textDecoration: "none" }}>
-            <Button variant="ghost" color="var(--accent)" fontWeight="700" >
-              Continue to your tasks
+          <Link href="/auth/signup" style={{ textDecoration: "none" }}>
+            <Button variant="ghost" color="var(--accent)" fontWeight="700">
+              Start for free →
             </Button>
           </Link>
         </Flex>

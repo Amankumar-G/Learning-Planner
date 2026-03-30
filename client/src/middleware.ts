@@ -1,18 +1,16 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
-const PROTECTED_ROUTES = ["/tasks"]
+const PUBLIC_ROUTES = ["/", "/auth/login", "/auth/signup"]
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value
   const { pathname } = request.nextUrl
 
-  const isProtected = PROTECTED_ROUTES.some((route) =>
-    pathname.startsWith(route),
-  )
+  const isPublic = PUBLIC_ROUTES.some((route) => pathname === route)
 
-  if (isProtected && !token) {
-    const loginUrl = new URL("/login", request.url)
+  if (!isPublic && !token) {
+    const loginUrl = new URL("/auth/login", request.url)
     loginUrl.searchParams.set("redirect", pathname)
     return NextResponse.redirect(loginUrl)
   }
@@ -21,6 +19,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Re-enable once login page is ready: ["/tasks/:path*"]
-  matcher: [],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 }
