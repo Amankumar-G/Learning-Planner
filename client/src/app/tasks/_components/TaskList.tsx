@@ -1,6 +1,7 @@
-import { Box, Button, Flex, Spinner, Stack, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react"
 import type { Task } from "../dto/task.dto"
 import { TaskCard } from "./TaskCard"
+import { TaskCardSkeleton } from "./TaskCardSkeleton"
 
 interface Props {
   tasks: Task[]
@@ -11,22 +12,11 @@ interface Props {
 export function TaskList({ tasks, loading, error }: Readonly<Props>) {
   if (loading) {
     return (
-      <Flex
-        justify="center"
-        align="center"
-        h="52"
-        direction="column"
-        gap={3}
-        border="1px dashed"
-        borderColor="var(--outline)"
-        rounded="2xl"
-        bg="#fffcf6"
-      >
-        <Spinner size="md" color="var(--accent)" borderWidth="2px" />
-        <Text fontSize="sm" color="var(--muted)">
-          Syncing your tasks...
-        </Text>
-      </Flex>
+      <Stack gap={3}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <TaskCardSkeleton key={i} />
+        ))}
+      </Stack>
     )
   }
 
