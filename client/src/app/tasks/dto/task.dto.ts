@@ -10,7 +10,12 @@ export interface Task {
 
 export interface TasksResponse {
   data: Task[]
-  total: number
-  page: number
-  limit: number
+  meta: {
+    page: number
+    limit: number
+    total: number
+    totalPages: number
+    hasNextPage: boolean
+    hasPreviousPage: boolean
+  }
 }

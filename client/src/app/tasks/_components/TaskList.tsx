@@ -10,11 +10,12 @@ interface Props {
 }
 
 export function TaskList({ tasks, loading, error }: Readonly<Props>) {
+  const skeletonkeys = ['task1', 'task2', 'task3', 'task4', 'task5']
   if (loading) {
     return (
       <Stack gap={3}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <TaskCardSkeleton key={i} />
+        {skeletonkeys.map((key) => (
+          <TaskCardSkeleton key={key} />
         ))}
       </Stack>
     )

@@ -7,8 +7,8 @@ import { useTasks } from "./_hooks/useTasks"
 
 export default function TasksPage() {
   const { data, isLoading, error } = useTasks()
-
   const tasks = data?.data ?? []
+
   const errorMessage = error ? (error as Error).message : null
 
   return (

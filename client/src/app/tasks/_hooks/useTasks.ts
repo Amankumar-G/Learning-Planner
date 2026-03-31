@@ -2,17 +2,16 @@
 
 import apiClient from "@/lib/axios"
 import { useQuery } from "@tanstack/react-query"
-import type { Task } from "../dto/task.dto"
+import type { TasksResponse } from "../dto/task.dto"
 
-async function getTask(id: number): Promise<Task> {
-  const { data } = await apiClient.get<Task>(`/tasks/${id}`)
+async function getTasks(): Promise<TasksResponse> {
+  const { data } = await apiClient.get<TasksResponse>("/tasks")
   return data
 }
 
-export function useTasks(id: number) {
+export function useTasks() {
   return useQuery({
-    queryKey: ["tasks", id],
-    queryFn: () => getTask(id),
-    enabled: !!id,
+    queryKey: ["tasks"],
+    queryFn: () => getTasks(),
   })
 }

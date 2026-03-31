@@ -7,6 +7,18 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class TasksService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async getTaskById(userId: number, id: number) {
+    const task = await this.prismaService.task.findFirst({
+      where: { id, userId },
+    });
+
+    if (!task) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+
+    return task;
+  }
+
   async getTasks(userId: number, page: number, limit: number) {
     if (page < 1) {
       throw new BadRequestException('Page must be greater than 0');

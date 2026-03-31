@@ -38,6 +38,14 @@ export class TasksController {
     return this.tasksService.getTasks(request.user.sub, page, limit);
   }
 
+  @Get(':id')
+  getTaskById(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.tasksService.getTaskById(request.user.sub, id);
+  }
+
   @Post()
   @UseFilters(TaskAlreadyExistsFilter)
   createTask(
