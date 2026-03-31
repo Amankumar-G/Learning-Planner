@@ -1,13 +1,20 @@
 "use client"
 
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react"
+import { clearAuthToken } from "@/lib/auth"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 const NAV_LINKS = [{ label: "Tasks", href: "/tasks" }]
 
 export function Navbar() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  function handleLogout() {
+    clearAuthToken()
+    router.push("/auth/login")
+  }
 
   return (
     <Box
@@ -63,6 +70,7 @@ export function Navbar() {
           color="var(--muted)"
           rounded="full"
           fontSize="sm"
+          onClick={handleLogout}
           _hover={{ bg: "#faf4e7", color: "var(--ink)" }}
         >
           Log out

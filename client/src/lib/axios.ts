@@ -1,4 +1,5 @@
 import axios from "axios"
+import { ACCESS_TOKEN_COOKIE_KEY } from "@/lib/auth"
 
 function getCookieValue(name: string): string | null {
   if (globalThis.window === undefined) {
@@ -24,7 +25,20 @@ apiClient.interceptors.request.use((config) => {
   const token =
     globalThis.window === undefined
       ? null
-      : localStorage.getItem("access_token") ?? getCookieValue("access_token")
+      : (() => {
+          const cookieToken = getCookieValue(ACCESS_TOKEN_COOKIE_KEY)
+
+          if (!cookieToken) {
+            localStorage.removeItem(ACCESS_TOKEN_COOKIE_KEY)
+            return null
+          }
+
+          if (localStorage.getItem(ACCESS_TOKEN_COOKIE_KEY) !== cookieToken) {
+            localStorage.setItem(ACCESS_TOKEN_COOKIE_KEY, cookieToken)
+          }
+
+          return cookieToken
+        })()
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
