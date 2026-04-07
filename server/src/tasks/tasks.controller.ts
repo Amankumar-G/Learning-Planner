@@ -4,6 +4,7 @@ import {
   DefaultValuePipe,
   Delete,
   Get,
+  Patch,
   Req,
   ParseIntPipe,
   Param,
@@ -16,6 +17,7 @@ import {
 import { Request } from 'express';
 import { TasksService } from './tasks.service';
 import type { CreateTaskDto } from './dto/create-task-dto';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { TaskAlreadyExistsFilter } from './filters/task-already-exists.filter';
 import { AuthGuard } from '../auth/auth.guard';
 import { PayLoadType } from '../auth/type/payLoadType';
@@ -70,5 +72,18 @@ export class TasksController {
     @Body() updateTaskDto: CreateTaskDto,
   ) {
     return this.tasksService.updateTask(request.user.sub, id, updateTaskDto);
+  }
+
+  @Patch(':id/status')
+  updateTaskStatus(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ) {
+    return this.tasksService.updateTaskStatus(
+      request.user.sub,
+      id,
+      updateTaskStatusDto.completed,
+    );
   }
 }

@@ -13,6 +13,11 @@ interface UpdateTaskPayload extends TaskPayload {
   id: number
 }
 
+interface ToggleTaskStatusPayload {
+  id: number
+  completed: boolean
+}
+
 const TASKS_QUERY_KEY = ["tasks"] as const
 
 async function createTask(payload: TaskPayload): Promise<Task> {
@@ -28,6 +33,12 @@ async function updateTask(payload: UpdateTaskPayload): Promise<Task> {
 
 async function deleteTask(id: number): Promise<{ message: string }> {
   const { data } = await apiClient.delete<{ message: string }>(`/tasks/${id}`)
+  return data
+}
+
+async function toggleTaskStatus(payload: ToggleTaskStatusPayload): Promise<Task> {
+  const { id, completed } = payload
+  const { data } = await apiClient.patch<Task>(`/tasks/${id}/status`, { completed })
   return data
 }
 
@@ -181,9 +192,48 @@ export function useTaskMutations() {
     },
   })
 
+  const toggleTaskStatusMutation = useMutation({
+    mutationFn: toggleTaskStatus,
+    onMutate: async (payload) => {
+      await queryClient.cancelQueries({ queryKey: TASKS_QUERY_KEY })
+      const previous = queryClient.getQueryData<TasksResponse>(TASKS_QUERY_KEY)
+
+      if (previous) {
+        queryClient.setQueryData<TasksResponse>(TASKS_QUERY_KEY, {
+          ...previous,
+          data: previous.data.map((task) =>
+            task.id === payload.id ? { ...task, completed: payload.completed } : task,
+          ),
+        })
+      }
+
+      return { previous }
+    },
+    onError: (_error, _payload, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(TASKS_QUERY_KEY, context.previous)
+      }
+    },
+    onSuccess: (serverTask) => {
+      const current = queryClient.getQueryData<TasksResponse>(TASKS_QUERY_KEY)
+      if (!current) {
+        return
+      }
+
+      queryClient.setQueryData<TasksResponse>(TASKS_QUERY_KEY, {
+        ...current,
+        data: current.data.map((task) => (task.id === serverTask.id ? serverTask : task)),
+      })
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: TASKS_QUERY_KEY })
+    },
+  })
+
   return {
     createTaskMutation,
     updateTaskMutation,
     deleteTaskMutation,
+    toggleTaskStatusMutation,
   }
 }

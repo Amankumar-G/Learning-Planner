@@ -11,6 +11,7 @@ interface Props {
   onCreateTask: () => void
   onEditTask: (task: Task) => void
   onDeleteTask: (task: Task) => void
+  onToggleTaskStatus: (task: Task, completed: boolean) => void
 }
 
 export function TaskList({
@@ -20,6 +21,7 @@ export function TaskList({
   onCreateTask,
   onEditTask,
   onDeleteTask,
+  onToggleTaskStatus,
 }: Readonly<Props>) {
   const skeletonkeys = ["task1", "task2", "task3", "task4", "task5"]
   if (loading) {
@@ -94,6 +96,7 @@ export function TaskList({
           task={task}
           onEdit={() => onEditTask(task)}
           onDelete={() => onDeleteTask(task)}
+          onToggleStatus={(completed) => onToggleTaskStatus(task, completed)}
         />
       ))}
     </Stack>

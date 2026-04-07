@@ -1,18 +1,28 @@
-import { Box, Button, Card, Flex, HStack, Text } from "@chakra-ui/react"
+import { Box, Button, Card, Flex, HStack, Stack, Text } from "@chakra-ui/react"
 import { compactButtonStyles } from "@/components/ui/button-styles"
+import { useState } from "react"
 import type { Task } from "../dto/task.dto"
 
 interface Props {
   task: Task
   onEdit: () => void
   onDelete: () => void
+  onToggleStatus: (completed: boolean) => void
 }
 
-export function TaskCard({ task, onEdit, onDelete }: Readonly<Props>) {
+export function TaskCard({
+  task,
+  onEdit,
+  onDelete,
+  onToggleStatus,
+}: Readonly<Props>) {
+  const [showFullDescription, setShowFullDescription] = useState(false)
   const formattedDate = new Date(task.createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
   })
+
+  const hasLongDescription = (task.description?.length ?? 0) > 160
 
   return (
     <Card.Root
@@ -24,39 +34,62 @@ export function TaskCard({ task, onEdit, onDelete }: Readonly<Props>) {
       _hover={{ borderColor: "#cabf9f", shadow: "sm", transform: "translateY(-1px)" }}
       transition="all 0.18s"
     >
-      <Card.Body px={5} py={4}>
-        <Flex align="center" gap={4}>
-          <Box
-            flexShrink={0}
-            w={3}
-            h={3}
-            rounded="full"
-            bg={task.completed ? "#14846d" : "var(--accent)"}
-            mt={0.25}
-            boxShadow="0 0 0 4px rgba(15, 118, 110, 0.12)"
-          />
+      <Card.Body px={{ base: 4, md: 5 }} py={{ base: 4, md: 4.5 }}>
+        <Stack gap={3}>
+          <Flex align="start" gap={3}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={(event) => onToggleStatus(event.target.checked)}
+              aria-label={`Mark ${task.title} as completed`}
+              style={{
+                marginTop: 2,
+                width: 18,
+                height: 18,
+                accentColor: "#0f766e",
+                cursor: "pointer",
+              }}
+            />
 
-          <Box flex="1" minW={0}>
-            <Text
-              fontSize="sm"
-              fontWeight="600"
-              color={task.completed ? "#9aa1a9" : "var(--ink)"}
-              textDecoration={task.completed ? "line-through" : "none"}
-              lineClamp={1}
-            >
-              {task.title}
-            </Text>
-            {task.description && (
-              <Text fontSize="xs" color="var(--muted)" mt={0.5} lineClamp={1}>
-                {task.description}
+            <Box flex="1" minW={0}>
+              <Text
+                fontSize="sm"
+                fontWeight="700"
+                color={task.completed ? "#9098a1" : "var(--ink)"}
+                textDecoration={task.completed ? "line-through" : "none"}
+              >
+                {task.title}
               </Text>
-            )}
-          </Box>
 
-          <HStack gap={3} flexShrink={0}>
-            <Text fontSize="xs" color="var(--muted)">
-              {formattedDate}
-            </Text>
+              {task.description && (
+                <>
+                  <Text
+                    mt={1.5}
+                    fontSize="sm"
+                    color="var(--muted)"
+                    whiteSpace="pre-wrap"
+                    lineClamp={showFullDescription ? undefined : 3}
+                  >
+                    {task.description}
+                  </Text>
+
+                  {hasLongDescription && (
+                    <Button
+                      variant="ghost"
+                      size="xs"
+                      h="auto"
+                      mt={1}
+                      px={1}
+                      color="var(--accent)"
+                      onClick={() => setShowFullDescription((prev) => !prev)}
+                    >
+                      {showFullDescription ? "Show less" : "Show more"}
+                    </Button>
+                  )}
+                </>
+              )}
+            </Box>
+
             <Box
               px={2.5}
               py={1}
@@ -65,9 +98,17 @@ export function TaskCard({ task, onEdit, onDelete }: Readonly<Props>) {
               fontSize="xs"
               fontWeight="700"
               color={task.completed ? "#0f5f50" : "#0f766e"}
+              flexShrink={0}
             >
               {task.completed ? "Done" : "Pending"}
             </Box>
+          </Flex>
+
+          <Flex justify="space-between" align="center" gap={3}>
+            <Text fontSize="xs" color="var(--muted)">
+              Created {formattedDate}
+            </Text>
+
             <HStack gap={2}>
               <Button
                 variant="outline"
@@ -88,8 +129,8 @@ export function TaskCard({ task, onEdit, onDelete }: Readonly<Props>) {
                 Delete
               </Button>
             </HStack>
-          </HStack>
-        </Flex>
+          </Flex>
+        </Stack>
       </Card.Body>
     </Card.Root>
   )

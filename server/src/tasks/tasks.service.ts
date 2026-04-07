@@ -108,4 +108,19 @@ export class TasksService {
       },
     });
   }
+
+  async updateTaskStatus(userId: number, id: number, completed: boolean) {
+    const existingTask = await this.prismaService.task.findFirst({
+      where: { id, userId },
+    });
+
+    if (!existingTask) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+
+    return this.prismaService.task.update({
+      where: { id },
+      data: { completed },
+    });
+  }
 }

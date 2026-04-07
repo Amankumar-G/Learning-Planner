@@ -16,8 +16,12 @@ type ModalMode = "create" | "edit" | "delete" | null
 export default function TasksPage() {
   const { data, isLoading, error } = useTasks()
   const tasks = data?.data ?? []
-  const { createTaskMutation, updateTaskMutation, deleteTaskMutation } =
-    useTaskMutations()
+  const {
+    createTaskMutation,
+    updateTaskMutation,
+    deleteTaskMutation,
+    toggleTaskStatusMutation,
+  } = useTaskMutations()
 
   const [modalMode, setModalMode] = useState<ModalMode>(null)
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined)
@@ -82,6 +86,22 @@ export default function TasksPage() {
     toaster.create({ title: "Task deleted", type: "success" })
   }
 
+  async function handleToggleTaskStatus(task: Task, completed: boolean) {
+    try {
+      await toggleTaskStatusMutation.mutateAsync({ id: task.id, completed })
+      toaster.create({
+        title: completed ? "Task marked completed" : "Task marked pending",
+        type: "success",
+      })
+    } catch (error) {
+      toaster.create({
+        title: "Status update failed",
+        description: error instanceof Error ? error.message : "Something went wrong.",
+        type: "error",
+      })
+    }
+  }
+
   return (
     <Box minH="100vh" px={{ base: 4, md: 8, xl: 10 }} py={{ base: 6, md: 9, xl: 10 }}>
       <Box
@@ -107,6 +127,7 @@ export default function TasksPage() {
           onCreateTask={openCreateModal}
           onEditTask={openEditModal}
           onDeleteTask={openDeleteModal}
+          onToggleTaskStatus={handleToggleTaskStatus}
         />
       </Box>
 
