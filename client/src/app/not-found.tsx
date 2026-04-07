@@ -1,4 +1,5 @@
 import { Box, Button, Container, Heading, Stack, Text } from "@chakra-ui/react"
+import { primaryButtonStyles, secondaryButtonStyles } from "@/components/ui/button-styles"
 import Link from "next/link"
 
 export default function NotFound() {
@@ -57,11 +58,10 @@ export default function NotFound() {
               <Link href="/tasks" style={{ textDecoration: "none" }}>
                 <Button
                   w={{ base: "full", sm: "auto" }}
-                  rounded="full"
                   bg="var(--accent)"
                   color="white"
-                  px={7}
                   _hover={{ bg: "#0b615a" }}
+                  {...primaryButtonStyles}
                 >
                   Go to tasks
                 </Button>
@@ -70,12 +70,11 @@ export default function NotFound() {
               <Link href="/" style={{ textDecoration: "none" }}>
                 <Button
                   w={{ base: "full", sm: "auto" }}
-                  rounded="full"
                   variant="outline"
                   borderColor="var(--outline)"
                   color="var(--ink)"
-                  px={7}
                   _hover={{ bg: "var(--accent-soft)", borderColor: "var(--accent)", color: "var(--accent)" }}
+                  {...secondaryButtonStyles}
                 >
                   Back home
                 </Button>

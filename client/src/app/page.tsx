@@ -13,6 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react"
+import { ghostButtonStyles, primaryButtonStyles, secondaryButtonStyles } from "@/components/ui/button-styles"
 import Link from "next/link"
 import { FiCalendar, FiFlag, FiTarget } from "react-icons/fi"
 
@@ -94,25 +95,21 @@ export default function Home() {
             <Flex gap={3} wrap="wrap" pt={2}>
               <Link href="/auth/signup" style={{ textDecoration: "none" }}>
                 <Button
-                  size="lg"
-                  rounded="full"
                   bg="var(--accent)"
                   color="white"
-                  px={7}
                   _hover={{ bg: "#0b615a" }}
+                  {...primaryButtonStyles}
                 >
                   Get started
                 </Button>
               </Link>
               <Link href="/auth/login" style={{ textDecoration: "none" }}>
                 <Button
-                  size="lg"
-                  rounded="full"
                   variant="outline"
                   borderColor="var(--outline)"
                   color="var(--ink)"
-                  px={7}
                   _hover={{ bg: "var(--accent-soft)", borderColor: "var(--accent)", color: "var(--accent)" }}
+                  {...secondaryButtonStyles}
                 >
                   Sign in
                 </Button>
@@ -172,7 +169,7 @@ export default function Home() {
 
         <Flex justify="flex-end" mt={5}>
           <Link href="/auth/signup" style={{ textDecoration: "none" }}>
-            <Button variant="ghost" color="var(--accent)" fontWeight="700">
+            <Button variant="ghost" color="var(--accent)" {...ghostButtonStyles}>
               Start for free →
             </Button>
           </Link>

@@ -1,11 +1,14 @@
-import { Box, Card, Flex, HStack, Text } from "@chakra-ui/react"
+import { Box, Button, Card, Flex, HStack, Text } from "@chakra-ui/react"
+import { compactButtonStyles } from "@/components/ui/button-styles"
 import type { Task } from "../dto/task.dto"
 
 interface Props {
   task: Task
+  onEdit: () => void
+  onDelete: () => void
 }
 
-export function TaskCard({ task }: Readonly<Props>) {
+export function TaskCard({ task, onEdit, onDelete }: Readonly<Props>) {
   const formattedDate = new Date(task.createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -65,6 +68,26 @@ export function TaskCard({ task }: Readonly<Props>) {
             >
               {task.completed ? "Done" : "Pending"}
             </Box>
+            <HStack gap={2}>
+              <Button
+                variant="outline"
+                borderColor="var(--outline)"
+                color="var(--muted)"
+                onClick={onEdit}
+                {...compactButtonStyles}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="outline"
+                borderColor="#efc0bf"
+                color="#a63b37"
+                onClick={onDelete}
+                {...compactButtonStyles}
+              >
+                Delete
+              </Button>
+            </HStack>
           </HStack>
         </Flex>
       </Card.Body>

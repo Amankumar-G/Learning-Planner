@@ -2,6 +2,7 @@
 
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react"
 import { clearAuthToken } from "@/lib/auth"
+import { secondaryButtonStyles } from "@/components/ui/button-styles"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -64,14 +65,12 @@ export function Navbar() {
         </HStack>
 
         <Button
-          size="sm"
           variant="outline"
           borderColor="var(--outline)"
           color="var(--muted)"
-          rounded="full"
-          fontSize="sm"
           onClick={handleLogout}
           _hover={{ bg: "#faf4e7", color: "var(--ink)" }}
+          {...secondaryButtonStyles}
         >
           Log out
         </Button>

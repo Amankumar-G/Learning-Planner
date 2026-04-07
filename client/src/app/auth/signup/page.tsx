@@ -1,6 +1,7 @@
 "use client"
 
 import { toaster } from "@/components/ui/toaster"
+import { primaryButtonStyles } from "@/components/ui/button-styles"
 import { Box, Button, Input, Stack, Text } from "@chakra-ui/react"
 import { useRouter } from "next/navigation"
 import { type FormEvent, useState } from "react"
@@ -126,16 +127,13 @@ export default function SignupPage() {
             loading={isPending}
             loadingText="Creating account…"
             w="full"
-            h="42px"
-            mt={1}
-            rounded="lg"
             bg="var(--accent)"
             color="white"
-            fontWeight="700"
-            fontSize="sm"
+            mt={2}
             _hover={{ bg: "#0b615a" }}
             _active={{ bg: "#085651" }}
             transition="all 0.18s"
+            {...primaryButtonStyles}
           >
             Create account
           </Button>

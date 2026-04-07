@@ -1,19 +1,27 @@
 import { Badge, Button, Flex, Heading, Text } from "@chakra-ui/react"
+import { primaryButtonStyles } from "@/components/ui/button-styles"
 
 interface Props {
   taskCount: number
   loading: boolean
+  onCreateTask: () => void
 }
 
-export function TasksHeader({ taskCount, loading }: Readonly<Props>) {
+export function TasksHeader({ taskCount, loading, onCreateTask }: Readonly<Props>) {
   const taskPluralSuffix = taskCount === 1 ? "" : "s"
   const summaryText = loading
     ? "Loading your study plan..."
     : `${taskCount} task${taskPluralSuffix} in your planner`
 
   return (
-    <Flex mb={7} align={{ base: "start", md: "center" }} justify="space-between" gap={4} wrap="wrap">
-      <Flex direction="column" gap={1.5}>
+    <Flex
+      mb={{ base: 6, md: 7 }}
+      align={{ base: "start", md: "center" }}
+      justify="space-between"
+      gap={{ base: 4, md: 5 }}
+      wrap="wrap"
+    >
+      <Flex direction="column" gap={{ base: 1, md: 1.5 }}>
         <Heading size="xl" fontWeight="800" letterSpacing="-0.7px" color="var(--ink)">
           My Tasks
         </Heading>
@@ -30,14 +38,11 @@ export function TasksHeader({ taskCount, loading }: Readonly<Props>) {
       </Flex>
 
       <Button
-        size="md"
         bg="var(--accent)"
         color="white"
-        rounded="full"
-        px={6}
-        fontWeight="600"
-        fontSize="sm"
+        onClick={onCreateTask}
         _hover={{ bg: "#0b615a" }}
+        {...primaryButtonStyles}
       >
         + New Task
       </Button>

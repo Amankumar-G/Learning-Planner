@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react"
+import { primaryButtonStyles } from "@/components/ui/button-styles"
 import type { Task } from "../dto/task.dto"
 import { TaskCard } from "./TaskCard"
 import { TaskCardSkeleton } from "./TaskCardSkeleton"
@@ -7,13 +8,23 @@ interface Props {
   tasks: Task[]
   loading: boolean
   error: string | null
+  onCreateTask: () => void
+  onEditTask: (task: Task) => void
+  onDeleteTask: (task: Task) => void
 }
 
-export function TaskList({ tasks, loading, error }: Readonly<Props>) {
-  const skeletonkeys = ['task1', 'task2', 'task3', 'task4', 'task5']
+export function TaskList({
+  tasks,
+  loading,
+  error,
+  onCreateTask,
+  onEditTask,
+  onDeleteTask,
+}: Readonly<Props>) {
+  const skeletonkeys = ["task1", "task2", "task3", "task4", "task5"]
   if (loading) {
     return (
-      <Stack gap={3}>
+      <Stack gap={{ base: 3.5, md: 3 }}>
         {skeletonkeys.map((key) => (
           <TaskCardSkeleton key={key} />
         ))}
@@ -27,12 +38,13 @@ export function TaskList({ tasks, loading, error }: Readonly<Props>) {
         justify="center"
         align="center"
         h="52"
+        px={{ base: 4, md: 5 }}
         border="1px solid"
         borderColor="#efc0bf"
         rounded="2xl"
         bg="#fff5f5"
       >
-        <Text fontSize="sm" color="#a63b37" fontWeight="500">
+        <Text fontSize="sm" color="#a63b37" fontWeight="500" textAlign="center">
           {error}
         </Text>
       </Flex>
@@ -46,7 +58,8 @@ export function TaskList({ tasks, loading, error }: Readonly<Props>) {
         align="center"
         h="56"
         direction="column"
-        gap={4}
+        gap={{ base: 3.5, md: 4 }}
+        px={{ base: 4, md: 6 }}
         border="1px dashed"
         borderColor="var(--outline)"
         rounded="2xl"
@@ -61,12 +74,11 @@ export function TaskList({ tasks, loading, error }: Readonly<Props>) {
           </Text>
         </Box>
         <Button
-          size="sm"
           bg="var(--accent)"
           color="white"
-          rounded="full"
-          px={5}
+          onClick={onCreateTask}
           _hover={{ bg: "#0b615a" }}
+          {...primaryButtonStyles}
         >
           + New Task
         </Button>
@@ -75,9 +87,14 @@ export function TaskList({ tasks, loading, error }: Readonly<Props>) {
   }
 
   return (
-    <Stack gap={3}>
+    <Stack gap={{ base: 3.5, md: 3 }}>
       {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
+        <TaskCard
+          key={task.id}
+          task={task}
+          onEdit={() => onEditTask(task)}
+          onDelete={() => onDeleteTask(task)}
+        />
       ))}
     </Stack>
   )
