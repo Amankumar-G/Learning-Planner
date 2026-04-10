@@ -138,7 +138,7 @@ export function TaskModal({
             borderColor="var(--outline)"
             rounded={{ base: "2xl", md: "3xl" }}
             maxW="2xl"
-            shadow="0 24px 64px rgba(31, 41, 51, 0.18)"
+              shadow="var(--surface-shadow-strong)"
           >
             <Dialog.Header pb={3} px={{ base: 5, md: 7 }} pt={{ base: 5, md: 6 }}>
               <Stack gap={1.5}>
@@ -156,14 +156,14 @@ export function TaskModal({
                 {mode === "delete" ? (
                   <Box
                     border="1px solid"
-                    borderColor="#efc0bf"
+                    borderColor="var(--danger-border)"
                     rounded="xl"
-                    bg="#fff5f5"
+                    bg="var(--danger-bg)"
                     px={{ base: 4, md: 5 }}
                     py={{ base: 3.5, md: 4 }}
                   >
-                    <Text color="#a63b37" fontSize="sm">
-                      Are you sure you want to delete "{task?.title ?? "this task"}"?
+                    <Text color="var(--danger-ink)" fontSize="sm">
+                      Are you sure you want to delete &quot;{task?.title ?? "this task"}&quot;?
                     </Text>
                   </Box>
                 ) : (
@@ -174,7 +174,7 @@ export function TaskModal({
                         name="title"
                         defaultValue={mode === "edit" ? task?.title ?? "" : ""}
                         placeholder="Build authentication flow"
-                        bg="white"
+                        bg="var(--surface-elevated)"
                         borderColor="var(--outline)"
                         h="44px"
                         px={4}
@@ -188,7 +188,7 @@ export function TaskModal({
                         defaultValue={mode === "edit" ? task?.description ?? "" : ""}
                         placeholder="Write tests, add modal, and verify API responses..."
                         rows={5}
-                        bg="white"
+                        bg="var(--surface-elevated)"
                         borderColor="var(--outline)"
                         resize="vertical"
                         px={4}
@@ -200,7 +200,7 @@ export function TaskModal({
               </form>
 
               {formError && (
-                <Text mt={4} fontSize="sm" color="#a63b37" fontWeight="600">
+                <Text mt={4} fontSize="sm" color="var(--danger-ink)" fontWeight="600">
                   {formError}
                 </Text>
               )}
@@ -220,10 +220,10 @@ export function TaskModal({
               <Button
                 type="submit"
                 form={FORM_ID}
-                bg={mode === "delete" ? "#c94540" : "var(--accent)"}
+                bg={mode === "delete" ? "var(--danger-solid)" : "var(--accent)"}
                 color="white"
                 loading={isPending}
-                _hover={{ bg: mode === "delete" ? "#af3c38" : "#0b615a" }}
+                _hover={{ bg: mode === "delete" ? "var(--danger-strong)" : "var(--accent-strong)" }}
                 {...primaryButtonStyles}
               >
                 {submitLabel}

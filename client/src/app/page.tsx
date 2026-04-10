@@ -48,7 +48,7 @@ export default function Home() {
           borderColor="var(--outline)"
           rounded={{ base: "2xl", md: "3xl" }}
           p={{ base: 6, md: 10 }}
-          shadow="0 28px 64px rgba(31, 41, 51, 0.08)"
+          shadow="var(--surface-shadow-strong)"
           overflow="hidden"
           position="relative"
         >
@@ -97,7 +97,7 @@ export default function Home() {
                 <Button
                   bg="var(--accent)"
                   color="white"
-                  _hover={{ bg: "#0b615a" }}
+                  _hover={{ bg: "var(--accent-strong)" }}
                   {...primaryButtonStyles}
                 >
                   Get started
@@ -119,7 +119,7 @@ export default function Home() {
 
           <Card.Root
             flex="1"
-            bg="#fbf7ee"
+            bg="var(--surface-muted)"
             borderColor="var(--outline)"
             rounded="2xl"
             shadow="none"
@@ -183,7 +183,7 @@ function StatCell(props: Readonly<{ label: string; value: string; hint: string }
   const { label, value, hint } = props
 
   return (
-    <Box border="1px solid" borderColor="var(--outline)" rounded="xl" bg="white" p={3.5}>
+    <Box border="1px solid" borderColor="var(--outline)" rounded="xl" bg="var(--surface-elevated)" p={3.5}>
       <Text fontSize="xs" color="var(--muted)">
         {label}
       </Text>

@@ -41,7 +41,7 @@ export function TasksHeader({ taskCount, loading, onCreateTask }: Readonly<Props
         bg="var(--accent)"
         color="white"
         onClick={onCreateTask}
-        _hover={{ bg: "#0b615a" }}
+        _hover={{ bg: "var(--accent-strong)" }}
         {...primaryButtonStyles}
       >
         + New Task

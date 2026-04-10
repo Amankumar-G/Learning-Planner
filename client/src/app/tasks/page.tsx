@@ -113,7 +113,7 @@ export default function TasksPage() {
         borderColor="var(--outline)"
         rounded={{ base: "2xl", md: "3xl" }}
         p={{ base: 4, md: 7, xl: 8 }}
-        shadow="0 22px 52px rgba(31, 41, 51, 0.07)"
+        shadow="var(--surface-shadow)"
       >
         <TasksHeader
           taskCount={tasks.length}

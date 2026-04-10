@@ -4,7 +4,7 @@ export function TaskCardSkeleton() {
   return (
     <Card.Root
       variant="outline"
-      bg="white"
+      bg="var(--surface-elevated)"
       borderColor="var(--outline)"
       rounded="xl"
       shadow="none"

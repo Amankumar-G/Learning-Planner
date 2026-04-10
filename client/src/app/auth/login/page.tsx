@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { toaster } from "@/components/ui/toaster"
 import { primaryButtonStyles } from "@/components/ui/button-styles"
 import { Box, Button, Input, Stack, Text } from "@chakra-ui/react"
@@ -9,6 +10,14 @@ import { AuthCard } from "../_components/AuthCard"
 import { useLogin } from "../_hooks/useLogin"
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
+  )
+}
+
+function LoginPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get("redirect") ?? "/tasks"
@@ -58,7 +67,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              bg="white"
+              bg="var(--surface-elevated)"
               border="1px solid"
               borderColor="var(--outline)"
               rounded="lg"
@@ -80,7 +89,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              bg="white"
+              bg="var(--surface-elevated)"
               border="1px solid"
               borderColor="var(--outline)"
               rounded="lg"
@@ -100,8 +109,8 @@ export default function LoginPage() {
             bg="var(--accent)"
             color="white"
             mt={2}
-            _hover={{ bg: "#0b615a" }}
-            _active={{ bg: "#085651" }}
+            _hover={{ bg: "var(--accent-strong)" }}
+            _active={{ bg: "var(--accent-pressed)" }}
             transition="all 0.18s"
             {...primaryButtonStyles}
           >

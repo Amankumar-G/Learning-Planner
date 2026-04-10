@@ -42,11 +42,11 @@ export function TaskList({
         h="52"
         px={{ base: 4, md: 5 }}
         border="1px solid"
-        borderColor="#efc0bf"
+        borderColor="var(--danger-border)"
         rounded="2xl"
-        bg="#fff5f5"
+        bg="var(--danger-bg)"
       >
-        <Text fontSize="sm" color="#a63b37" fontWeight="500" textAlign="center">
+        <Text fontSize="sm" color="var(--danger-ink)" fontWeight="500" textAlign="center">
           {error}
         </Text>
       </Flex>
@@ -65,7 +65,7 @@ export function TaskList({
         border="1px dashed"
         borderColor="var(--outline)"
         rounded="2xl"
-        bg="#fffcf6"
+        bg="var(--surface-muted)"
       >
         <Box textAlign="center">
           <Text fontSize="md" fontWeight="700" color="var(--ink)">
@@ -79,7 +79,7 @@ export function TaskList({
           bg="var(--accent)"
           color="white"
           onClick={onCreateTask}
-          _hover={{ bg: "#0b615a" }}
+          _hover={{ bg: "var(--accent-strong)" }}
           {...primaryButtonStyles}
         >
           + New Task

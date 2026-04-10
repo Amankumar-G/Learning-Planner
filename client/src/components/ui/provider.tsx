@@ -15,7 +15,7 @@ export function Provider(props: Readonly<ColorModeProviderProps>) {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider value={defaultSystem}>
-        <ColorModeProvider forcedTheme="light" {...props} />
+        <ColorModeProvider {...props} />
         <Toaster />
       </ChakraProvider>
     </QueryClientProvider>

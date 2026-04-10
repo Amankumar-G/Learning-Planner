@@ -27,11 +27,11 @@ export function TaskCard({
   return (
     <Card.Root
       variant="outline"
-      bg="white"
+      bg="var(--surface-elevated)"
       borderColor="var(--outline)"
       rounded="xl"
       shadow="none"
-      _hover={{ borderColor: "#cabf9f", shadow: "sm", transform: "translateY(-1px)" }}
+      _hover={{ borderColor: "var(--outline-strong)", shadow: "sm", transform: "translateY(-1px)" }}
       transition="all 0.18s"
     >
       <Card.Body px={{ base: 4, md: 5 }} py={{ base: 4, md: 4.5 }}>
@@ -46,7 +46,7 @@ export function TaskCard({
                 marginTop: 2,
                 width: 18,
                 height: 18,
-                accentColor: "#0f766e",
+                accentColor: "var(--accent)",
                 cursor: "pointer",
               }}
             />
@@ -55,7 +55,7 @@ export function TaskCard({
               <Text
                 fontSize="sm"
                 fontWeight="700"
-                color={task.completed ? "#9098a1" : "var(--ink)"}
+                color={task.completed ? "var(--task-done-ink)" : "var(--ink)"}
                 textDecoration={task.completed ? "line-through" : "none"}
               >
                 {task.title}
@@ -94,10 +94,10 @@ export function TaskCard({
               px={2.5}
               py={1}
               rounded="full"
-              bg={task.completed ? "#d7f4ef" : "#e6f7f2"}
+              bg={task.completed ? "var(--status-done-bg)" : "var(--status-pending-bg)"}
               fontSize="xs"
               fontWeight="700"
-              color={task.completed ? "#0f5f50" : "#0f766e"}
+              color={task.completed ? "var(--status-done-ink)" : "var(--status-pending-ink)"}
               flexShrink={0}
             >
               {task.completed ? "Done" : "Pending"}
@@ -121,8 +121,8 @@ export function TaskCard({
               </Button>
               <Button
                 variant="outline"
-                borderColor="#efc0bf"
-                color="#a63b37"
+                borderColor="var(--danger-border)"
+                color="var(--danger-ink)"
                 onClick={onDelete}
                 {...compactButtonStyles}
               >

@@ -41,7 +41,7 @@ export function AuthCard({
           border="1px solid"
           borderColor="var(--outline)"
           rounded="2xl"
-          shadow="0 22px 52px rgba(31, 41, 51, 0.07)"
+          shadow="var(--surface-shadow)"
         >
           <Card.Body p={{ base: 6, md: 8 }}>
             <Stack gap={6}>

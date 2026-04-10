@@ -6,11 +6,60 @@
 	--bg-canvas: #f5f3ed;
 	--bg-tint: #efe6d6;
 	--surface: #fffdf7;
+	--surface-elevated: #ffffff;
+	--surface-muted: #fbf7ee;
 	--ink: #1f2933;
 	--muted: #6b7280;
 	--accent: #0f766e;
+	--accent-strong: #0b615a;
+	--accent-pressed: #085651;
 	--accent-soft: #d7f4ef;
 	--outline: #dfd4bf;
+	--outline-strong: #cabf9f;
+	--nav-surface: rgba(255, 253, 247, 0.88);
+	--nav-chip: rgba(255, 255, 255, 0.75);
+	--danger-bg: #fff5f5;
+	--danger-border: #efc0bf;
+	--danger-ink: #a63b37;
+	--danger-solid: #c94540;
+	--danger-strong: #af3c38;
+	--status-pending-bg: #e6f7f2;
+	--status-pending-ink: #0f766e;
+	--status-done-bg: #d7f4ef;
+	--status-done-ink: #0f5f50;
+	--task-done-ink: #9098a1;
+	--surface-shadow: 0 22px 52px rgba(31, 41, 51, 0.07);
+	--surface-shadow-strong: 0 24px 64px rgba(31, 41, 51, 0.18);
+}
+
+.dark {
+	--bg-canvas: #0f1419;
+	--bg-tint: #182129;
+	--surface: #1d2730;
+	--surface-elevated: #24313c;
+	--surface-muted: #202c36;
+	--ink: #e8edf2;
+	--muted: #9ca9b7;
+	--accent: #34b3a6;
+	--accent-strong: #2a9f94;
+	--accent-pressed: #22867d;
+	--accent-soft: #1f3b3a;
+	--outline: #31404d;
+	--outline-strong: #425361;
+	--nav-surface: rgba(18, 25, 31, 0.82);
+	--nav-chip: rgba(29, 39, 48, 0.88);
+	--danger-bg: #3a2326;
+	--danger-border: #714147;
+	--danger-ink: #f2b6b2;
+	--danger-solid: #d4625d;
+	--danger-strong: #b8544f;
+	--status-pending-bg: #1f3b3a;
+	--status-pending-ink: #92ddd4;
+	--status-done-bg: #1f4b46;
+	--status-done-ink: #a6efe3;
+	--task-done-ink: #8291a1;
+	--surface-shadow: 0 22px 52px rgba(3, 8, 13, 0.4);
+	--surface-shadow-strong: 0 24px 64px rgba(3, 8, 13, 0.52);
 }
 
 * {
@@ -28,6 +77,14 @@ body {
 	background:
 		radial-gradient(circle at 18% 12%, rgba(198, 169, 112, 0.2) 0%, transparent 32%),
 		radial-gradient(circle at 84% 6%, rgba(15, 118, 110, 0.14) 0%, transparent 30%),
+		linear-gradient(145deg, var(--bg-canvas) 0%, var(--bg-tint) 100%);
+	background-attachment: fixed;
+}
+
+.dark body {
+	background:
+		radial-gradient(circle at 18% 12%, rgba(52, 179, 166, 0.18) 0%, transparent 35%),
+		radial-gradient(circle at 84% 6%, rgba(119, 166, 214, 0.14) 0%, transparent 34%),
 		linear-gradient(145deg, var(--bg-canvas) 0%, var(--bg-tint) 100%);
 	background-attachment: fixed;
 }

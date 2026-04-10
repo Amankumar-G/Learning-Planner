@@ -3,6 +3,7 @@
 import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react"
 import { clearAuthToken } from "@/lib/auth"
 import { secondaryButtonStyles } from "@/components/ui/button-styles"
+import { ColorModeButton } from "@/components/ui/color-mode"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -22,7 +23,7 @@ export function Navbar() {
       as="nav"
       borderBottomWidth="1px"
       borderColor="var(--outline)"
-      bg="rgba(255, 253, 247, 0.88)"
+      bg="var(--nav-surface)"
       backdropFilter="blur(8px)"
       px={{ base: 5, md: 10 }}
       py={4}
@@ -43,7 +44,7 @@ export function Navbar() {
           rounded="full"
           border="1px solid"
           borderColor="var(--outline)"
-          bg="rgba(255, 255, 255, 0.75)"
+          bg="var(--nav-chip)"
         >
           {NAV_LINKS.map(({ label, href }) => (
             <Link key={href} href={href} style={{ textDecoration: "none" }}>
@@ -64,16 +65,27 @@ export function Navbar() {
           ))}
         </HStack>
 
-        <Button
-          variant="outline"
-          borderColor="var(--outline)"
-          color="var(--muted)"
-          onClick={handleLogout}
-          _hover={{ bg: "#faf4e7", color: "var(--ink)" }}
-          {...secondaryButtonStyles}
-        >
-          Log out
-        </Button>
+        <HStack gap={2}>
+          <ColorModeButton
+            variant="outline"
+            borderWidth="1px"
+            borderColor="var(--outline)"
+            color="var(--muted)"
+            _hover={{ bg: "var(--surface)", color: "var(--ink)" }}
+            {...secondaryButtonStyles}
+          />
+
+          <Button
+            variant="outline"
+            borderColor="var(--outline)"
+            color="var(--muted)"
+            onClick={handleLogout}
+            _hover={{ bg: "var(--surface)", color: "var(--ink)" }}
+            {...secondaryButtonStyles}
+          >
+            Log out
+          </Button>
+        </HStack>
       </Flex>
     </Box>
   )

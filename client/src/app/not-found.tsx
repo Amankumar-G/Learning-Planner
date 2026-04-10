@@ -13,7 +13,7 @@ export default function NotFound() {
           borderColor="var(--outline)"
           rounded={{ base: "2xl", md: "3xl" }}
           p={{ base: 7, md: 10 }}
-          shadow="0 22px 52px rgba(31, 41, 51, 0.07)"
+          shadow="var(--surface-shadow)"
           position="relative"
           overflow="hidden"
         >
@@ -60,7 +60,7 @@ export default function NotFound() {
                   w={{ base: "full", sm: "auto" }}
                   bg="var(--accent)"
                   color="white"
-                  _hover={{ bg: "#0b615a" }}
+                  _hover={{ bg: "var(--accent-strong)" }}
                   {...primaryButtonStyles}
                 >
                   Go to tasks

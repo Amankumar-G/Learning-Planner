@@ -45,7 +45,7 @@ export default function SignupPage() {
   }
 
   const inputStyles = {
-    bg: "white",
+    bg: "var(--surface-elevated)",
     border: "1px solid",
     borderColor: "var(--outline)",
     rounded: "lg",
@@ -130,8 +130,8 @@ export default function SignupPage() {
             bg="var(--accent)"
             color="white"
             mt={2}
-            _hover={{ bg: "#0b615a" }}
-            _active={{ bg: "#085651" }}
+            _hover={{ bg: "var(--accent-strong)" }}
+            _active={{ bg: "var(--accent-pressed)" }}
             transition="all 0.18s"
             {...primaryButtonStyles}
           >
